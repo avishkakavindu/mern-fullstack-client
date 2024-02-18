@@ -1,0 +1,15 @@
+.form {
+  .input {
+    @apply p-3 rounded-lg;
+  }
+
+  .is-invalid {
+    @apply border border-red-500;
+  }
+
+  .error {
+    @apply text-red-500;
+
+    font-size: 12px;
+  }
+}
