@@ -22,7 +22,7 @@
   "globals": {
     "JSX": true
   },
-  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier", "import"],
   "rules": {
     "prettier/prettier": "error",
     "react/prop-types": "off",
@@ -56,7 +56,8 @@
       { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
     ],
     "import/prefer-default-export": "off",
-    "no-debugger": "warn"
+    "no-debugger": "warn",
+    "arrow-body-style": "warn"
   },
   "settings": {
     "react": {

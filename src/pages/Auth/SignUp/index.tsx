@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { ISignUpInput } from '../../../types/auth/auth.interface';
+import { ISignUpInput } from '../../../types/user.interface';
+import { createUser } from '../../../services/user.service';
+import { handleApiError } from '../../../utils/errorHandler';
 
 function SignUp() {
   const {
@@ -12,15 +15,22 @@ function SignUp() {
     formState: { errors },
   } = useForm<ISignUpInput>();
 
-  const onSubmit: SubmitHandler<ISignUpInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ISignUpInput> = async (userData) => {
+    try {
+      const response = await createUser(userData);
+      if (response?.data) {
+        toast.success('Account created successfully');
+      }
+    } catch (error) {
+      handleApiError(error);
+    }
   };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">SignUp</h1>
 
-      <form className="flex flex-col form gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col form gap-4" onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="flex flex-col">
           <input
             type="text"
@@ -61,6 +71,10 @@ function SignUp() {
             className={`input bg-slate-100 ${errors?.firstName && 'is-invalid'}`}
             {...register('email', {
               required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Invalid email address',
+              },
             })}
           />
           {errors?.email && (
