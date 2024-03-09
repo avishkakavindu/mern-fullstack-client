@@ -28,7 +28,7 @@ export function handleApiError(error: unknown): void {
     const err = error as IAPIErrorResponse;
     if (err.response.data) {
       const errorResponse: IErrorResponse = err.response.data;
-      console.error('API Error:', errorResponse.message);
+
       if (errorResponse.userMessage && errorResponse.userMessage.trim() !== '') {
         toast.error(errorResponse.userMessage);
       }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -15,7 +15,10 @@ function SignUp() {
     formState: { errors },
   } = useForm<ISignUpInput>();
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit: SubmitHandler<ISignUpInput> = async (userData) => {
+    setLoading(true);
     try {
       const response = await createUser(userData);
       if (response?.data) {
@@ -23,6 +26,8 @@ function SignUp() {
       }
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,7 +56,7 @@ function SignUp() {
           <input
             type="text"
             placeholder="Last Name"
-            className={`input bg-slate-100 ${errors?.firstName && 'is-invalid'}`}
+            className={`input bg-slate-100 ${errors?.lastName && 'is-invalid'}`}
             {...register('lastName', {
               required: 'Last name is required',
             })}
@@ -68,7 +73,7 @@ function SignUp() {
           <input
             type="email"
             placeholder="Email"
-            className={`input bg-slate-100 ${errors?.firstName && 'is-invalid'}`}
+            className={`input bg-slate-100 ${errors?.email && 'is-invalid'}`}
             {...register('email', {
               required: 'Email is required',
               pattern: {
@@ -88,7 +93,7 @@ function SignUp() {
           <input
             type="password"
             placeholder="Password"
-            className={`input bg-slate-100 ${errors?.firstName && 'is-invalid'}`}
+            className={`input bg-slate-100 ${errors?.password && 'is-invalid'}`}
             {...register('password', {
               required: 'Password is required',
               minLength: {
@@ -113,7 +118,7 @@ function SignUp() {
           <input
             type="password"
             placeholder="Confirm Password"
-            className={`input bg-slate-100 ${errors?.firstName && 'is-invalid'}`}
+            className={`input bg-slate-100 ${errors?.confirmPassword && 'is-invalid'}`}
             {...register('confirmPassword', {
               required: 'Please confirm your password',
               validate: (value) => value === getValues('password') || 'Passwords do not match',
@@ -126,8 +131,12 @@ function SignUp() {
           )}
         </div>
 
-        <button type="submit" className="bg-slate-700 p-3 rounded-lg text text-white">
-          Sign Up
+        <button
+          type="submit"
+          className="bg-slate-700 p-3 rounded-lg text text-white"
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : 'Sign Up'}
         </button>
       </form>
 
