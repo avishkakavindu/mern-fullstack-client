@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { ISignUpInput } from '../../../types/user.interface';
-import { createUser } from '../../../services/user.service';
-import { handleApiError } from '../../../utils/errorHandler';
+import { ISignUpInput } from '@interfaces/user.interface';
+import { createUser } from '@services/user.service';
+import { handleApiError } from '@utils/errorHandler';
 
 function SignUp() {
   const {

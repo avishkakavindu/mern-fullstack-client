@@ -24,7 +24,8 @@
       "@pages/*": ["src/pages/*"],
       "@components/*": ["src/components/*"],
       "@assets/*": ["src/assets/*"],
-      "@api/*": ["src/api/*"]
+      "@api/*": ["src/api/*"],
+      "@redux/*": ["src/redux/*"]
       // Add more aliases as needed
     }
   },

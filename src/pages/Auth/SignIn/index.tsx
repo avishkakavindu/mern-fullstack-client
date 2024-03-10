@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 import { ISignInInput } from '@interfaces/auth.interface';
 import { login } from '@services/auth.service';
+import { loginStatus, loginSuccess } from '@redux/slices/user.slice';
 import { handleApiError } from '@utils/errorHandler';
 import { storeAuthTokens } from '@utils/auth';
+import { RootState } from '@redux/store';
 
 function SignIn() {
   const {
@@ -15,16 +17,18 @@ function SignIn() {
     formState: { errors },
   } = useForm<ISignInInput>();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   const onSubmit: SubmitHandler<ISignInInput> = async (userData) => {
-    setLoading(true);
+    dispatch(loginStatus({ loading: true }));
     try {
       const response = await login(userData);
 
       if (response?.data) {
-        console.log(response.headers);
+        debugger;
 
         // retrieve headers
         const authorizationHeader = response.headers['authorization'];
@@ -33,13 +37,15 @@ function SignIn() {
         // store auth tokens securely
         storeAuthTokens({ accessToken: authorizationHeader, refreshToken: refreshTokenHeader });
 
+        // update redux state
+        dispatch(loginSuccess(response.data));
         // navigate to home
         navigate('/');
       }
     } catch (error) {
       handleApiError(error);
     } finally {
-      setLoading(false);
+      dispatch(loginStatus({ loading: false }));
     }
   };
 

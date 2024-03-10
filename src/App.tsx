@@ -5,7 +5,7 @@ import '../public/favicon.ico';
 import Home from './pages/Home';
 import About from './pages/About';
 import SignIn from './pages/Auth/SignIn';
-import SignUp from './pages/Auth/SignUp';
+import SignUp from './pages/User/SignUp';
 import Profile from './pages/User/Profile';
 import Header from './components/Header';
 
