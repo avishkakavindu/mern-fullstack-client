@@ -1,28 +1,40 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { ISignInInput } from '@interfaces/auth.interface';
 import { login } from '@services/auth.service';
 import { handleApiError } from '@utils/errorHandler';
+import { storeAuthTokens } from '@utils/auth';
 
 function SignIn() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<ISignInInput>();
 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<ISignInInput> = async (userData) => {
     setLoading(true);
     try {
       const response = await login(userData);
+
       if (response?.data) {
-        toast.success('Successfully');
+        console.log(response.headers);
+
+        // retrieve headers
+        const authorizationHeader = response.headers['authorization'];
+        const refreshTokenHeader = response.headers['refresh-token'];
+
+        // store auth tokens securely
+        storeAuthTokens({ accessToken: authorizationHeader, refreshToken: refreshTokenHeader });
+
+        // navigate to home
+        navigate('/');
       }
     } catch (error) {
       handleApiError(error);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -15,6 +15,8 @@ function SignUp() {
     formState: { errors },
   } = useForm<ISignUpInput>();
 
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<ISignUpInput> = async (userData) => {
@@ -24,6 +26,7 @@ function SignUp() {
       if (response?.data) {
         toast.success('Account created successfully');
       }
+      navigate('/sign-in');
     } catch (error) {
       handleApiError(error);
     } finally {

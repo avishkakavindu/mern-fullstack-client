@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.2.18",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
+    "encrypt-storage": "^2.12.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.0",
@@ -24,11 +25,11 @@
   },
   "scripts": {
     "start": "webpack-dev-server --env MODE=development",
+    "clean": "rm -rf build",
     "build": "npm run clean && webpack --env MODE=dev --progress",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src --ext .ts,.tsx --ignore-pattern *test.ts* --fix",
-    "clean": "rm -rf dist"
+    "lint": "eslint src --ext .ts,.tsx --ignore-pattern *test.ts* --fix"
   },
   "eslintConfig": {
     "extends": [

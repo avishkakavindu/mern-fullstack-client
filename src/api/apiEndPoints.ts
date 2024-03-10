@@ -1,5 +1,5 @@
 export const AUTH = {
-  LOGIN: '/login', // POST
+  LOGIN: '/auth/login', // POST
 };
 
 export const USER = {
