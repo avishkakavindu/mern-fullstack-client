@@ -6,9 +6,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ISignInInput } from '@interfaces/auth.interface';
 import { login } from '@services/auth.service';
 import { loginStatus, loginSuccess } from '@redux/slices/user.slice';
+import { RootState } from '@redux/store';
 import { handleApiError } from '@utils/errorHandler';
 import { storeAuthTokens } from '@utils/auth';
-import { RootState } from '@redux/store';
 
 function SignIn() {
   const {
@@ -20,7 +20,7 @@ function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state: RootState) => state.auth);
+  const { loading } = useSelector((state: RootState) => state.user);
 
   const onSubmit: SubmitHandler<ISignInInput> = async (userData) => {
     dispatch(loginStatus({ loading: true }));
@@ -28,8 +28,6 @@ function SignIn() {
       const response = await login(userData);
 
       if (response?.data) {
-        debugger;
-
         // retrieve headers
         const authorizationHeader = response.headers['authorization'];
         const refreshTokenHeader = response.headers['refresh-token'];
