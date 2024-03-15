@@ -29,7 +29,7 @@ module.exports = {
       '@assets': path.resolve(__dirname, '.', 'src/assets'),
       '@api': path.resolve(__dirname, '.', 'src/api'),
       '@redux': path.resolve(__dirname, '.', 'src/redux'),
-
+      '@hooks': path.resolve(__dirname, '.', 'src/hooks'),
       // Add more aliases as needed
     },
   },

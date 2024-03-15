@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IAuthSlice, IUser } from '@interfaces/auth.interface';
+import { PURGE } from 'redux-persist';
 
 const initialState: IAuthSlice = {
   user: null,
   loading: false,
-  error: false,
+  isAuthenticated: false,
 };
 
 // A slice for authentication
@@ -30,8 +31,11 @@ const authSlice = createSlice({
     loginSuccess(state, action: PayloadAction<IUser>) {
       state.loading = false;
       state.user = action.payload;
+      state.isAuthenticated = true;
     },
-    loginFailure(state, payload) {},
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => initialState); // Handle PURGE action
   },
 });
 

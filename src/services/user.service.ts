@@ -5,3 +5,7 @@ import { ISignUpInput } from '../types/user.interface';
 export const createUser = (userData: ISignUpInput) => {
   return instance.post(USER.CREATE_USER, userData);
 };
+
+export const getUser = () => {
+  return instance.get(USER.GET_USER);
+};

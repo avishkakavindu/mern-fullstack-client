@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { ISignInInput } from '@interfaces/auth.interface';
 import { login } from '@services/auth.service';
-import { loginStatus, loginSuccess } from '@redux/slices/user.slice';
+import { loginStatus, loginSuccess } from '@redux/slices/auth.slice';
 import { RootState } from '@redux/store';
 import { handleApiError } from '@utils/errorHandler';
 import { storeAuthTokens } from '@utils/auth';
@@ -20,7 +20,7 @@ function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state: RootState) => state.user);
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   const onSubmit: SubmitHandler<ISignInInput> = async (userData) => {
     dispatch(loginStatus({ loading: true }));

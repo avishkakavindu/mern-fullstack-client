@@ -18,5 +18,5 @@ export interface IUser {
 export interface IAuthSlice {
   user: IUser | null;
   loading: boolean;
-  error: boolean;
+  isAuthenticated: boolean;
 }

@@ -4,4 +4,5 @@ export const AUTH = {
 
 export const USER = {
   CREATE_USER: '/users', // POST
+  GET_USER: '/users', // GET
 };
