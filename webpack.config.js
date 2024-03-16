@@ -30,7 +30,7 @@ module.exports = {
       '@api': path.resolve(__dirname, '.', 'src/api'),
       '@redux': path.resolve(__dirname, '.', 'src/redux'),
       '@hooks': path.resolve(__dirname, '.', 'src/hooks'),
-      // Add more aliases as needed
+      // Add more aliases as needed...
     },
   },
   module: {
