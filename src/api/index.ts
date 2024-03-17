@@ -1,5 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
+import { persistor } from '@redux/store';
 import { getAPIBaseURL } from '@configs/index';
 import { getAuthTokens, removeAuthTokens } from '@utils/auth';
 
@@ -36,23 +37,22 @@ instance.interceptors.request.use(
 );
 
 // Add a response interceptor to handle authorization failures
-// instance.interceptors.response.use(
-//   (response) => {
-//     // Return the response if successful
-//     return response;
-//   },
-//   (error: AxiosError) => {
-//     // Check if the error status is 401 (Unauthorized)
-//     if (error.response?.status && error.response.status === 401) {
-//       removeAuthTokens();
-//       // Redirect the user to the sign-in page
-//       // window.location.replace('/sign-in');
-//       return Promise.resolve(true);
-//       // !TODO logout token clearing
-//     }
-//     // Return the error
-//     return Promise.reject(error);
-//   },
-// );
+instance.interceptors.response.use(
+  (response) => {
+    // Return the response if successful
+    return response;
+  },
+  (error: AxiosError) => {
+    // Check if the error status is 401 (Unauthorized)
+    if (error.response?.status && error.response.status === 401) {
+      // remove all stored tokens
+      removeAuthTokens();
+      // reset persisted redux states, this will trigger routes logic in App.tsx
+      persistor.purge();
+    }
+    // Return the error
+    return Promise.reject(error);
+  },
+);
 
 export default instance;

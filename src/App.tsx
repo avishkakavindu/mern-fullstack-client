@@ -37,7 +37,6 @@ function App() {
       }
 
       const response = await getUser();
-
       if (response?.data) {
         // update redux state
         dispatch(loginSuccess(response.data));

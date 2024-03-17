@@ -21,4 +21,8 @@ export const publicRoutes = [
     path: '/about',
     element: <About />,
   },
+  {
+    path: '*',
+    element: <Navigate to="/sign-in" />,
+  },
 ];

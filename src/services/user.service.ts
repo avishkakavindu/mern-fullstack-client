@@ -7,5 +7,6 @@ export const createUser = (userData: ISignUpInput) => {
 };
 
 export const getUser = () => {
-  return instance.get(USER.GET_USER);
+  const data = instance.get(USER.GET_USER);
+  return data;
 };
